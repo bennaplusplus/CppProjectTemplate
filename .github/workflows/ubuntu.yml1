@@ -1,0 +1,53 @@
+name: Ubuntu CI Test  # Nome del workflow visualizzato nella tab "Actions"
+
+on:
+  push:
+    branches: [ main, master, dev ]       # Esegue il workflow quando si fa push su questi branch
+  pull_request:
+    branches: [ main, master, dev ]       # Esegue il workflow anche quando si apre o aggiorna una PR verso questi branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Usa una macchina virtuale Ubuntu aggiornata
+
+    steps:
+    - uses: actions/checkout@v2  # Clona il repository nel runner
+
+    - name: install
+      run: |
+        pip install --user -U gcovr  # Installa gcovr (strumento per analisi della code coverage)
+
+    - name: prepare
+      run: |
+        make prepare  # Esegue un eventuale step preparatorio (es. download dipendenze); assicurati che esista
+
+    - name: configure
+      run: |
+        cmake -S. -B build -DCMAKE_BUILD_TYPE=Debug -DENABLE_COVERAGE=On  # Configura la build in modalità Debug e abilita la coverage (se gestito dal CMakeLists.txt)
+        # Nota: -H è deprecato, meglio usare -S . (puoi aggiornare a: cmake -S . -B build ...)
+
+    - name: building and testing
+      run: |
+        cmake --build build --config Debug --target coverage # Compila in parallelo e lancia il target coverage (presumibilmente definito in CMake)
+        cd build
+        ctest .  # Esegue i test con CTest nella cartella di build
+
+    - name: Code Coverage Report
+      uses: irongut/CodeCoverageSummary@v1.3.0  # Action per creare un report coverage leggibile in Markdown
+      with:
+        filename: build/coverage/coverage.cobertura.xml  # File XML Cobertura generato da gcovr
+        badge: true                    # Genera un badge (tipo "Coverage: 75%")
+        fail_below_min: true          # Fallisce il job se la coverage è sotto il minimo
+        format: markdown              # Output in formato Markdown
+        hide_branch_rate: false       # Mostra anche la branch coverage
+        hide_complexity: true         # Non mostra la complessità ciclomatica
+        indicators: true              # Usa colori (🟢🟡🔴) per i livelli di coverage
+        output: both                  # Salva sia nei log che in un file
+        thresholds: '60 80'           # Colori: rosso < 60, giallo 60–80, verde > 80
+
+    - name: Add Coverage PR Comment
+      uses: marocchino/sticky-pull-request-comment@v2  # Action che commenta (o aggiorna) la pull request con il report coverage
+      if: github.event_name == 'pull_request'           # Questo step si esegue solo per le pull request (non su push)
+      with:
+        recreate: true                  # Cancella il vecchio commento (se presente) e ne crea uno nuovo
+        path: code-coverage-results.md # File Markdown generato dallo step precedente da inserire nel commento

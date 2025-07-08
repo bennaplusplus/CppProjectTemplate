@@ -31,12 +31,12 @@ catch_discover_tests("UnitTestBar")
 if(ENABLE_COVERAGE)
     set(COVERAGE_MAIN "coverage")
     set(COVERAGE_EXCLUDES
-        "${PROJECT_SOURCE_DIR}/app/*"
-        "${PROJECT_SOURCE_DIR}/cmake/*"
-        "${PROJECT_SOURCE_DIR}/docs/*"
-        "${PROJECT_SOURCE_DIR}/external/*"
-        "${PROJECT_SOURCE_DIR}/tests/*"
-        "${PROJECT_SOURCE_DIR}/build/*"
+        "${CMAKE_SOURCE_DIR}/app/.*"
+        "${CMAKE_SOURCE_DIR}/cmake/.*"
+        "${CMAKE_SOURCE_DIR}/docs/.*"
+        "${CMAKE_SOURCE_DIR}/external/.*"
+        "${CMAKE_SOURCE_DIR}/tests/.*"
+        "${CMAKE_BINARY_DIR}/.*"
         "/usr/include/*")
     set(COVERAGE_EXTRA_FLAGS)
     set(COVERAGE_DEPENDENCIES "UnitTestFoo" "UnitTestBar")
@@ -44,6 +44,8 @@ if(ENABLE_COVERAGE)
     setup_target_for_coverage_gcovr_html(
         NAME
         ${COVERAGE_MAIN}
+        EXCLUDE
+        ${COVERAGE_EXCLUDES}
         EXECUTABLE
         ctest
         DEPENDENCIES

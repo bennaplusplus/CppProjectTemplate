@@ -124,6 +124,7 @@ function(setup_target_for_coverage_gcovr_html)
     # Set up commands which will be run to generate coverage data Run tests
     set(GCOVR_HTML_EXEC_TESTS_CMD ${Coverage_EXECUTABLE}
                                   ${Coverage_EXECUTABLE_ARGS})
+
     # Create folder
     set(GCOVR_HTML_FOLDER_CMD
         ${CMAKE_COMMAND}

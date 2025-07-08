@@ -1,20 +1,28 @@
+# Nome leggibile del workflow che vedrò su GitHub (nella tab “Actions”).
 name: Windows CI Test
 
+# Eventi che lo attivano: o un commit pushato o una richiesta di merge su una di queste branch
 on:
   push:
     branches: [ main, master, dev ]
   pull_request:
     branches: [ main, master, dev ]
 
+# Definizione del job che si chiama build
 jobs:
   build:
+    # Viene eseguito su un runner GitHub Windows aggiornato all'ultima versione (windows-latest = Windows Server 2022)
     runs-on: windows-latest
+    # Steps (le azioni da eseguire nel job)
     steps:
+    # Scarica il codice del repository nella macchina Windows temporanea in cui gira il job.
     - uses: actions/checkout@v2
+    # nome del comando
     - name: prepare
       run: |
         make prepare
     - name: configure
+    #uso un compilatore MSVC a 32 bit
       run: |
         cmake -H"." -Bbuild -T host=x86 -A x64 -DCMAKE_BUILD_TYPE="Debug"
     - name: building and testing
