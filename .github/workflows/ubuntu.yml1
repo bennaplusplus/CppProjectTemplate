@@ -23,7 +23,7 @@ jobs:
 
     - name: configure
       run: |
-        cmake -H. -Bbuild -DCMAKE_BUILD_TYPE=Debug -DENABLE_COVERAGE=On  # Configura la build in modalità Debug e abilita la coverage (se gestito dal CMakeLists.txt)
+        cmake -S. -B build -DCMAKE_BUILD_TYPE=Debug -DENABLE_COVERAGE=On  # Configura la build in modalità Debug e abilita la coverage (se gestito dal CMakeLists.txt)
         # Nota: -H è deprecato, meglio usare -S . (puoi aggiornare a: cmake -S . -B build ...)
 
     - name: building and testing
