@@ -37,7 +37,9 @@ if(ENABLE_COVERAGE)
         "${PROJECT_SOURCE_DIR}/external/.*"
         "${PROJECT_SOURCE_DIR}/tests/.*"
         "${PROJECT_SOURCE_DIR}/build/.*"
-        "/usr/include/*")
+        "/usr/include/*"
+        "${PROJECT_SOURCE_DIR}/build/_deps/.*"
+        )
     set(COVERAGE_EXTRA_FLAGS)
     set(COVERAGE_DEPENDENCIES "UnitTestFoo" "UnitTestBar")
 
