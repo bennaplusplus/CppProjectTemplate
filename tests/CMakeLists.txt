@@ -44,10 +44,10 @@ if(ENABLE_COVERAGE)
     setup_target_for_coverage_gcovr_html(
         NAME
         ${COVERAGE_MAIN}
-        EXECUTABLE
-        ctest
         EXCLUDE
         ${COVERAGE_EXCLUDES}
+        EXECUTABLE
+        ctest
         DEPENDENCIES
         ${COVERAGE_DEPENDENCIES}
         BASE_DIRECTORY
