@@ -132,6 +132,7 @@ function(setup_target_for_coverage_gcovr_html)
         ${PROJECT_BINARY_DIR}/${Coverage_NAME})
     # Running gcovr
     set(GCOVR_EXTRA_FLAGS
+        --gcov-ignore-errors=no_working_dir_found
         --json-summary
         --json-summary-pretty
         --html-theme
