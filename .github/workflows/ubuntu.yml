@@ -28,7 +28,7 @@ jobs:
 
     - name: building and testing
       run: |
-        cmake --build build --config Debug --target coverage -j4  # Compila in parallelo e lancia il target coverage (presumibilmente definito in CMake)
+        cmake --build build --config Debug --target coverage # Compila in parallelo e lancia il target coverage (presumibilmente definito in CMake)
         cd build
         ctest .  # Esegue i test con CTest nella cartella di build
 
