@@ -37,9 +37,7 @@ if(ENABLE_COVERAGE)
         "${PROJECT_SOURCE_DIR}/external/.*"
         "${PROJECT_SOURCE_DIR}/tests/.*"
         "${PROJECT_SOURCE_DIR}/build/.*"
-        "/usr/include/*"
-        "${PROJECT_SOURCE_DIR}/build/_deps/.*"
-        )
+        "/usr/include/*")
     set(COVERAGE_EXTRA_FLAGS)
     set(COVERAGE_DEPENDENCIES "UnitTestFoo" "UnitTestBar")
 
@@ -48,6 +46,8 @@ if(ENABLE_COVERAGE)
         ${COVERAGE_MAIN}
         EXECUTABLE
         ctest
+        EXCLUDE
+        ${COVERAGE_EXCLUDES}
         DEPENDENCIES
         ${COVERAGE_DEPENDENCIES}
         BASE_DIRECTORY
