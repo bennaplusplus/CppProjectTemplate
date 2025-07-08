@@ -132,7 +132,7 @@ function(setup_target_for_coverage_gcovr_html)
         ${PROJECT_BINARY_DIR}/${Coverage_NAME})
     # Running gcovr
     set(GCOVR_EXTRA_FLAGS
-        --preserve-paths
+        --hash-filenames
         --json-summary
         --json-summary-pretty
         --html-theme
