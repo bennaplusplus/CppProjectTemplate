@@ -31,12 +31,12 @@ catch_discover_tests("UnitTestBar")
 if(ENABLE_COVERAGE)
     set(COVERAGE_MAIN "coverage")
     set(COVERAGE_EXCLUDES
-        "${PROJECT_SOURCE_DIR}/app/*"
+        "${PROJECT_SOURCE_DIR}/app/**"
         "${PROJECT_SOURCE_DIR}/cmake/*"
         "${PROJECT_SOURCE_DIR}/docs/*"
-        "${PROJECT_SOURCE_DIR}/external/*"
+        "${PROJECT_SOURCE_DIR}/external/**"
         "${PROJECT_SOURCE_DIR}/tests/*"
-        "${PROJECT_SOURCE_DIR}/build/*"
+        "${PROJECT_SOURCE_DIR}/build/**"
         "/usr/include/*")
     set(COVERAGE_EXTRA_FLAGS)
     set(COVERAGE_DEPENDENCIES "UnitTestFoo" "UnitTestBar")
