@@ -8,3 +8,4 @@ ignore:
   - "external/*"
   - "external/**/*"
   - "tests/*"
+  - "_deps/**/*"
