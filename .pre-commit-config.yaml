@@ -1,16 +1,33 @@
+# Blocco il commit solo se TUTTI gli hook falliscono.
+# Se uno fallisce, continua comunque a eseguire gli altri hook.
 fail_fast: false
+
 repos:
--   repo: https://github.com/pre-commit/pre-commit-hooks
+  # Repo ufficiale con hook base (spazi bianchi, YAML, JSON, ecc.)
+  - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.4.0
+
     hooks:
+      # Controllo che i file YAML abbiano una sintassi valida
       - id: check-yaml
+
+      # Controllo che i file JSON siano validi
       - id: check-json
-        exclude: .vscode
+        exclude: ^\.vscode/  # Escludo tutti i file nella cartella .vscode/
+
+      # Aggiungo newline alla fine del file, se manca
       - id: end-of-file-fixer
+
+      # Rimuovo eventuali spazi bianchi alla fine delle righe
       - id: trailing-whitespace
 
--   repo: https://github.com/pre-commit/mirrors-clang-format
-    rev: 'v16.0.2'
+  # Hook per clang-format: formatta automaticamente codice C/C++
+  - repo: https://github.com/pre-commit/mirrors-clang-format
+    rev: 'v16.0.2'  # Versione di clang-format usata
+
     hooks:
       - id: clang-format
+        # Applico clang-format SOLO a questi tipi di file:
+        files: \.(cpp|hpp|cc|c|h)
+        # NON applico clang-format a questi file:
         exclude_types: [javascript, json]
